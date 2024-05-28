@@ -34,6 +34,11 @@ async function Page({ params }) {
             <p>{verse.transliteration}</p>
             <h4>Word Meanings</h4>
             <p>{verse.wordMeanings}</p>
+            <h4>{`English translation by ${verse.gitaTranslationsByVerseId.nodes[0].authorName}`}</h4>
+            <p>{verse.gitaTranslationsByVerseId.nodes[0].description}</p>
+            {/* <p>
+              <b>{`Author: ${verse.gitaTranslationsByVerseId.nodes[0].authorName}`}</b>
+            </p> */}
             <hr />
           </div>
         ))}
