@@ -68,23 +68,42 @@ export async function getChapter(chapterNumber) {
   };
 }
 
-// query: gql`
-// query {
-//   allGitaChapters(condition: { chapterNumber: ${chapterNumber} }) {
-//     nodes {
-//       versesCount
-//       name
-//       nameTranslated
-//       chapterSummary
-//       chapterSummaryHindi
-//       gitaVersesByChapterId {
-//         nodes {
-//           verseNumber
-//           transliteration
-//           id
-//         }
-//       }
-//     }
-//   }
-// }
-// `,
+export async function getVerse(verseId) {
+  const client = createApolloClient();
+  const { data } = await client.query({
+    //Get verse data for specified verseId
+    query: gql`
+      query {
+        allGitaVerses(condition: { id: ${verseId} }) {
+          nodes {
+            chapterNumber
+            verseNumber
+            text
+            transliteration
+            wordMeanings
+            gitaTranslationsByVerseId {
+              nodes {
+                authorId
+                authorName
+                description
+                language
+              }
+            }
+            gitaCommentariesByVerseId {
+              nodes {
+                authorId
+                authorName
+                description
+                language
+              }
+            }
+          }
+        }
+      }
+      `,
+  });
+
+  return {
+    gitaVerse: data.allGitaVerses.nodes[0],
+  };
+}

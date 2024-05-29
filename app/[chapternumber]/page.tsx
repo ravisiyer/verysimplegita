@@ -23,11 +23,12 @@ async function Page({ params }) {
         <h4>हिन्दी सारांश</h4>
         <p>{gitaChapter.chapterSummaryHindi}</p>
         <h4>{`${gitaChapter.versesCount} verses`}</h4>
+        <hr />
         {gitaChapter.gitaVersesByChapterId.nodes.map((verse) => (
           <div key={verse.id}>
-            {/* <Link href={`/${verse.verseNumber}`}> */}
-            <h3>{`Verse ${verse.verseNumber}`}</h3>
-            {/* </Link> */}
+            <Link href={`/verse/${verse.id}`}>
+              <h3>{`Verse ${verse.verseNumber}`}</h3>
+            </Link>
             <h4>Text</h4>
             <p>{verse.text}</p>
             <h4>Transliteration</h4>
@@ -36,9 +37,10 @@ async function Page({ params }) {
             <p>{verse.wordMeanings}</p>
             <h4>{`English translation by ${verse.gitaTranslationsByVerseId.nodes[0].authorName}`}</h4>
             <p>{verse.gitaTranslationsByVerseId.nodes[0].description}</p>
-            {/* <p>
-              <b>{`Author: ${verse.gitaTranslationsByVerseId.nodes[0].authorName}`}</b>
-            </p> */}
+            <Link href={`/verse/${verse.id}`}>
+              {/* <button>Commentaries and more translations</button> */}
+              Commentaries and more translations
+            </Link>
             <hr />
           </div>
         ))}
