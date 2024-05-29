@@ -3,11 +3,21 @@ import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { capitalizeFirstLetter } from "@/app/lib/util";
 import { FIRST_VERSEID, LAST_VERSEID } from "@/app/constants";
+import Navbar from "@/app/ui/navbar";
 
 async function Page({ params }) {
   const verseId = params.id;
 
-  if (isNaN(verseId) || verseId < FIRST_VERSEID || verseId > LAST_VERSEID) {
+  if (isNaN(verseId)) {
+    notFound();
+  }
+
+  const numericVerseId = Number(verseId);
+  if (
+    !Number.isInteger(numericVerseId) ||
+    numericVerseId < FIRST_VERSEID ||
+    numericVerseId > LAST_VERSEID
+  ) {
     notFound();
   }
 
@@ -17,6 +27,7 @@ async function Page({ params }) {
   return (
     <div>
       <Suspense fallback={`Loading ...`}>
+        <Navbar numericVerseId={numericVerseId} />
         <h3>{`Chapter ${gitaVerse.chapterNumber}, Verse ${gitaVerse.verseNumber}`}</h3>
         <h4>Text</h4>
         <p>{gitaVerse.text}</p>
@@ -50,6 +61,7 @@ async function Page({ params }) {
             <p>{commentary.description}</p>
           </div>
         ))}
+        <Navbar numericVerseId={numericVerseId} />
       </Suspense>
     </div>
   );

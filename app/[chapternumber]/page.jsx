@@ -3,14 +3,20 @@ import { Suspense } from "react";
 import { getChapter } from "../lib/data";
 import Link from "next/link";
 import { FIRST_CHAPTERNUMBER, LAST_CHAPTERNUMBER } from "../constants";
+import Navbar from "@/app/ui/navbar";
 
 async function Page({ params }) {
   const chapterNumber = params.chapternumber;
 
+  if (isNaN(chapterNumber)) {
+    notFound();
+  }
+
+  const numericChapterNumber = Number(chapterNumber);
   if (
-    isNaN(chapterNumber) ||
-    chapterNumber < FIRST_CHAPTERNUMBER ||
-    chapterNumber > LAST_CHAPTERNUMBER
+    !Number.isInteger(numericChapterNumber) ||
+    numericChapterNumber < FIRST_CHAPTERNUMBER ||
+    numericChapterNumber > LAST_CHAPTERNUMBER
   ) {
     notFound();
   }
@@ -21,6 +27,7 @@ async function Page({ params }) {
   return (
     <div>
       <Suspense fallback={`Loading ...`}>
+        <Navbar numericChapterNumber={numericChapterNumber} />
         <h3>{`Chapter ${chapterNumber}: ${gitaChapter.nameTranslated} ${gitaChapter.name}`}</h3>
         <h4>English Summary</h4>
         <p>{gitaChapter.chapterSummary}</p>
@@ -47,6 +54,7 @@ async function Page({ params }) {
             <hr />
           </div>
         ))}
+        <Navbar numericChapterNumber={numericChapterNumber} />
       </Suspense>
     </div>
   );
