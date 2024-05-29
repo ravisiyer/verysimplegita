@@ -2,12 +2,16 @@ import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { getChapter } from "../lib/data";
 import Link from "next/link";
+import { FIRST_CHAPTERNUMBER, LAST_CHAPTERNUMBER } from "../constants";
 
 async function Page({ params }) {
   const chapterNumber = params.chapternumber;
 
-  // Hard coded now; Consider replacing later from GraphQL data
-  if (isNaN(chapterNumber) || chapterNumber < 1 || chapterNumber > 18) {
+  if (
+    isNaN(chapterNumber) ||
+    chapterNumber < FIRST_CHAPTERNUMBER ||
+    chapterNumber > LAST_CHAPTERNUMBER
+  ) {
     notFound();
   }
 

@@ -18,14 +18,14 @@ export default function Error({
     <div>
       <h2>Sorry! Something went wrong!</h2>
       <p>{`Details: ${error.message}`}</p>
-      {/* <button
+      <button
         onClick={
           // Attempt to recover by trying to re-render the segment
           () => reset()
         }
       >
         Try again
-      </button> */}
+      </button>
     </div>
   );
 }

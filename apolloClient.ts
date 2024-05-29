@@ -1,6 +1,5 @@
 import { ApolloClient, InMemoryCache } from "@apollo/client";
-
-const GRAPHQL_URI = "https://gql.bhagavadgita.io/graphql";
+import { GRAPHQL_URI } from "@/app/constants";
 
 const createApolloClient = () => {
   return new ApolloClient({

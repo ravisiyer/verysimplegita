@@ -1,12 +1,13 @@
 import { getVerse } from "@/app/lib/data";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
+import { capitalizeFirstLetter } from "@/app/lib/util";
+import { FIRST_VERSEID, LAST_VERSEID } from "@/app/constants";
 
 async function Page({ params }) {
   const verseId = params.id;
 
-  // Hard coded now; Consider replacing later from GraphQL data
-  if (isNaN(verseId) || verseId < 1 || verseId > 701) {
+  if (isNaN(verseId) || verseId < FIRST_VERSEID || verseId > LAST_VERSEID) {
     notFound();
   }
 
@@ -28,7 +29,10 @@ async function Page({ params }) {
         {gitaVerse.gitaTranslationsByVerseId.nodes.map((translation) => (
           <div key={translation.authorId}>
             <b>
-              <i>{`In ${translation.language} by ${translation.authorName}`}</i>
+              <i>
+                In {capitalizeFirstLetter(translation.language)} by{" "}
+                {translation.authorName}
+              </i>
             </b>
             <p>{translation.description}</p>
           </div>
@@ -38,7 +42,10 @@ async function Page({ params }) {
         {gitaVerse.gitaCommentariesByVerseId.nodes.map((commentary) => (
           <div key={commentary.authorId}>
             <b>
-              <i> {`In ${commentary.language} by ${commentary.authorName}`}</i>
+              <i>
+                In {capitalizeFirstLetter(commentary.language)} by{" "}
+                {commentary.authorName}
+              </i>
             </b>
             <p>{commentary.description}</p>
           </div>

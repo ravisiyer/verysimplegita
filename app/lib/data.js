@@ -1,5 +1,6 @@
 import { gql } from "@apollo/client";
 import createApolloClient from "@/apolloClient";
+import { GRAPHQL_URI } from "@/app/constants";
 
 export async function getAllChapters() {
   const client = createApolloClient();
@@ -28,7 +29,7 @@ export async function getAllChapters() {
   } catch (error) {
     console.error("GraphQL Endpoint Error:", error);
     throw new Error(
-      "Failed to fetch all chapters from GraphQL data endpoint (database)."
+      `Failed to fetch all chapters from data source (GraphQL endpoint): ${GRAPHQL_URI}`
     );
   }
 }
@@ -76,7 +77,7 @@ export async function getChapter(chapterNumber) {
   } catch (error) {
     console.error("GraphQL Endpoint Error:", error);
     throw new Error(
-      "Failed to fetch chapter from GraphQL data endpoint (database)."
+      `Failed to fetch chapter from data source (GraphQL endpoint): ${GRAPHQL_URI}`
     );
   }
 }
@@ -95,7 +96,7 @@ export async function getVerse(verseId) {
             text
             transliteration
             wordMeanings
-            gitaTranslationsByVerseId {
+            gitaTranslationsByVerseId(orderBy: LANGUAGE_ID_ASC) {
               nodes {
                 authorId
                 authorName
@@ -103,7 +104,7 @@ export async function getVerse(verseId) {
                 language
               }
             }
-            gitaCommentariesByVerseId {
+            gitaCommentariesByVerseId(orderBy: LANGUAGE_ID_ASC) {
               nodes {
                 authorId
                 authorName
@@ -123,7 +124,7 @@ export async function getVerse(verseId) {
   } catch (error) {
     console.error("GraphQL Endpoint Error:", error);
     throw new Error(
-      "Failed to fetch verse from GraphQL data endpoint (database)."
+      `Failed to fetch verse from data source (GraphQL endpoint): ${GRAPHQL_URI}`
     );
   }
 }
