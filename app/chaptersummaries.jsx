@@ -1,27 +1,15 @@
 import Link from "next/link";
 import { getAllChapters } from "./lib/data";
 
-async function AllGitaChaptersSummaries() {
+async function ChapterSummaries() {
   let data = await getAllChapters();
   let allGitaChapters = data.allGitaChapters;
 
   return (
     <div>
       <h2>Bhagavad Gita Chapter Summaries भगवत गीता अध्यायों का सारांश</h2>
-      <p>
-        Starter/test app. version without styling. Data source:
-        https://gql.bhagavadgita.io/graphql. Data fetched using Apollo Client.
-      </p>
+      <p>Data source: https://gql.bhagavadgita.io/graphql</p>
       {allGitaChapters.map((chapter) => (
-        // (chapter: {
-        //   id: number;
-        //   chapterNumber: number;
-        //   name: string;
-        //   nameTranslated: string;
-        //   chapterSummary: string;
-        //   chapterSummaryHindi: string;
-        //   versesCount: number;
-        // }) => (
         <div key={chapter.id}>
           <Link href={`/${chapter.chapterNumber}`}>
             <h3>{`${chapter.chapterNumber}: ${chapter.nameTranslated} ${chapter.name}`}</h3>
@@ -38,4 +26,4 @@ async function AllGitaChaptersSummaries() {
     </div>
   );
 }
-export default AllGitaChaptersSummaries;
+export default ChapterSummaries;

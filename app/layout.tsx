@@ -5,8 +5,8 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Very Simple Bhagavad Gita",
-  description: "Very Simple Bhagavad Gita web app",
+  title: "Bhagavad Gita (Very Simple App)",
+  description: "Very Simple but functional Bhagavad Gita web app",
 };
 
 export default function RootLayout({

@@ -6,7 +6,7 @@ import Link from "next/link";
 async function Page({ params }) {
   const chapterNumber = params.chapternumber;
 
-  // Hard coded now; Replace later from data
+  // Hard coded now; Consider replacing later from GraphQL data
   if (isNaN(chapterNumber) || chapterNumber < 1 || chapterNumber > 18) {
     notFound();
   }
@@ -38,7 +38,6 @@ async function Page({ params }) {
             <h4>{`English translation by ${verse.gitaTranslationsByVerseId.nodes[0].authorName}`}</h4>
             <p>{verse.gitaTranslationsByVerseId.nodes[0].description}</p>
             <Link href={`/verse/${verse.id}`}>
-              {/* <button>Commentaries and more translations</button> */}
               Commentaries and more translations
             </Link>
             <hr />
