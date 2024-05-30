@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import "@/app/ui/global.css";
 
 export const metadata: Metadata = {
   title: "Bhagavad Gita (Very Simple App)",

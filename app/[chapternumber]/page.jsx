@@ -54,6 +54,7 @@ async function Page({ params }) {
             <hr />
           </div>
         ))}
+        <p>{`Chapter ${chapterNumber}: ${gitaChapter.nameTranslated} ${gitaChapter.name}`}</p>
         <Navbar numericChapterNumber={numericChapterNumber} />
       </Suspense>
     </div>

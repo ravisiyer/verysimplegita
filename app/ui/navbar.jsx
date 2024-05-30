@@ -10,21 +10,23 @@ import {
 function Navbar({ numericChapterNumber = 0, numericVerseId = 0 }) {
   let nextHref = "";
   let prevHref = "";
-  if (numericChapterNumber > 0) {
-    if (numericChapterNumber > FIRST_CHAPTERNUMBER) {
-      prevHref = `/${numericChapterNumber - 1}`;
-    }
-    if (numericChapterNumber < LAST_CHAPTERNUMBER) {
-      nextHref = `/${numericChapterNumber + 1}`;
-    }
-  }
+  let upHref = "";
 
   if (numericVerseId > 0) {
+    upHref = `/${numericChapterNumber}`;
     if (numericVerseId > FIRST_VERSEID) {
       prevHref = `/verse/${numericVerseId - 1}`;
     }
     if (numericVerseId < LAST_VERSEID) {
       nextHref = `/verse/${numericVerseId + 1}`;
+    }
+  } else if (numericChapterNumber > 0) {
+    upHref = "/";
+    if (numericChapterNumber > FIRST_CHAPTERNUMBER) {
+      prevHref = `/${numericChapterNumber - 1}`;
+    }
+    if (numericChapterNumber < LAST_CHAPTERNUMBER) {
+      nextHref = `/${numericChapterNumber + 1}`;
     }
   }
 
@@ -34,22 +36,13 @@ function Navbar({ numericChapterNumber = 0, numericVerseId = 0 }) {
       {/* Disabling below Prev and Next links conditionally seems to require the complicated code below 
       Ref: 
       https://stackoverflow.com/questions/73555618/how-can-i-disable-link-href-in-next-js-on-various-conditions */}
-      <Link
-        href={prevHref}
-        style={{
-          pointerEvents: prevHref === "" ? "none" : "auto",
-        }}
-      >
+      <Link href={prevHref} className={prevHref === "" ? "disabled" : ""}>
         Prev
       </Link>
-      <Link
-        href={nextHref}
-        style={{
-          pointerEvents: nextHref === "" ? "none" : "auto",
-        }}
-      >
+      <Link href={nextHref} className={nextHref === "" ? "disabled" : ""}>
         Next
       </Link>
+      <Link href={upHref}>Up</Link>
     </div>
   );
 }

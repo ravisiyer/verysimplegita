@@ -24,10 +24,14 @@ async function Page({ params }) {
   let data = await getVerse(verseId);
   let gitaVerse = data.gitaVerse;
 
+  const numericChapterNumber = Number(gitaVerse.chapterNumber);
   return (
     <div>
       <Suspense fallback={`Loading ...`}>
-        <Navbar numericVerseId={numericVerseId} />
+        <Navbar
+          numericVerseId={numericVerseId}
+          numericChapterNumber={numericChapterNumber}
+        />
         <h3>{`Chapter ${gitaVerse.chapterNumber}, Verse ${gitaVerse.verseNumber}`}</h3>
         <h4>Text</h4>
         <p>{gitaVerse.text}</p>
@@ -61,7 +65,12 @@ async function Page({ params }) {
             <p>{commentary.description}</p>
           </div>
         ))}
-        <Navbar numericVerseId={numericVerseId} />
+        <hr />
+        <p>{`Chapter ${gitaVerse.chapterNumber}, Verse ${gitaVerse.verseNumber}`}</p>
+        <Navbar
+          numericVerseId={numericVerseId}
+          numericChapterNumber={numericChapterNumber}
+        />
       </Suspense>
     </div>
   );
