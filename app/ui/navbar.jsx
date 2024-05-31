@@ -6,6 +6,7 @@ import {
   FIRST_VERSEID,
   LAST_VERSEID,
 } from "@/app/constants";
+import SelectChapterVerse from "../ui/selectchapver";
 
 function Navbar({ numericChapterNumber = 0, numericVerseId = 0 }) {
   let nextHref = "";
@@ -43,6 +44,7 @@ function Navbar({ numericChapterNumber = 0, numericVerseId = 0 }) {
         Next
       </Link>
       <Link href={upHref}>Up</Link>
+      <SelectChapterVerse />
     </div>
   );
 }

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getAllChapters } from "./lib/data";
 import { GRAPHQL_URI } from "@/app/constants";
+import SelectChapterVerse from "@/app/ui/selectchapver";
 
 async function ChapterSummaries() {
   let data = await getAllChapters();
@@ -8,6 +9,7 @@ async function ChapterSummaries() {
 
   return (
     <div>
+      <SelectChapterVerse />
       <h2>Bhagavad Gita Chapter Summaries भगवत गीता अध्यायों का सारांश</h2>
       <p>{`Data source (GraphQL endpoint): ${GRAPHQL_URI}`}</p>
       {allGitaChapters.map((chapter) => (
