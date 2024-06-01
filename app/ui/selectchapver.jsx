@@ -4,8 +4,8 @@ import { useState, useEffect } from "react";
 import {
   FIRST_CHAPTERNUMBER,
   LAST_CHAPTERNUMBER,
-  MIN_VERSE_NUMBER_IN_CHAPTER,
-  MAX_VERSE_NUMBER_IN_CHAPTER,
+  MIN_VERSE_NUMBER_IN_ALL_CHAPTERS,
+  MAX_VERSE_NUMBER_IN_ALL_CHAPTERS,
   NUMBER_OF_VERSES_IN_CHAPTERS,
 } from "../constants";
 
@@ -25,7 +25,7 @@ function calcVerseId(numericChapterNumber, numericVerseNumber) {
 }
 
 function SelectChapterVerse({ idSuffix = "" }) {
-  const [chapterNumber, setChapterNumber] = useState("1");
+  const [chapterNumber, setChapterNumber] = useState("");
   const [verseNumber, setVerseNumber] = useState("");
 
   const pathname = usePathname();
@@ -51,6 +51,18 @@ function SelectChapterVerse({ idSuffix = "" }) {
     }
   }, []);
 
+  function getValNumericChapterNumber(chapterNumber) {
+    const numericChapterNumber = Number(chapterNumber);
+    if (
+      !Number.isInteger(numericChapterNumber) ||
+      numericChapterNumber < FIRST_CHAPTERNUMBER ||
+      numericChapterNumber > LAST_CHAPTERNUMBER
+    ) {
+      return { valid: false, numericChapterNumber };
+    }
+    return { valid: true, numericChapterNumber };
+  }
+
   function goToChapterVerse() {
     const chapterErrorMessage =
       `For chapter (Ch.), please specify a number between ` +
@@ -60,16 +72,21 @@ function SelectChapterVerse({ idSuffix = "" }) {
       alert(chapterErrorMessage);
       return;
     }
-
-    const numericChapterNumber = Number(chapterNumber);
-    if (
-      !Number.isInteger(numericChapterNumber) ||
-      numericChapterNumber < FIRST_CHAPTERNUMBER ||
-      numericChapterNumber > LAST_CHAPTERNUMBER
-    ) {
+    const valChapterNumber = getValNumericChapterNumber(chapterNumber);
+    if (!valChapterNumber.valid) {
       alert(chapterErrorMessage);
       return;
     }
+    const numericChapterNumber = valChapterNumber.numericChapterNumber;
+    // const numericChapterNumber = Number(chapterNumber);
+    // if (
+    //   !Number.isInteger(numericChapterNumber) ||
+    //   numericChapterNumber < FIRST_CHAPTERNUMBER ||
+    //   numericChapterNumber > LAST_CHAPTERNUMBER
+    // ) {
+    //   alert(chapterErrorMessage);
+    //   return;
+    // }
 
     if (verseNumber.trim() === "") {
       replace(`/${chapterNumber}`);
@@ -77,7 +94,7 @@ function SelectChapterVerse({ idSuffix = "" }) {
     }
     const verseErrorMessage =
       `For verse (Ve.) in chapter (Ch.) ${numericChapterNumber}, please specify a number between ` +
-      `${MIN_VERSE_NUMBER_IN_CHAPTER} and ${
+      `${MIN_VERSE_NUMBER_IN_ALL_CHAPTERS} and ${
         NUMBER_OF_VERSES_IN_CHAPTERS[numericChapterNumber - 1]
       }`;
 
@@ -89,7 +106,7 @@ function SelectChapterVerse({ idSuffix = "" }) {
     const numericVerseNumber = Number(verseNumber);
     if (
       !Number.isInteger(numericVerseNumber) ||
-      numericVerseNumber < MIN_VERSE_NUMBER_IN_CHAPTER ||
+      numericVerseNumber < MIN_VERSE_NUMBER_IN_ALL_CHAPTERS ||
       numericVerseNumber >
         NUMBER_OF_VERSES_IN_CHAPTERS[numericChapterNumber - 1]
     ) {
@@ -100,14 +117,25 @@ function SelectChapterVerse({ idSuffix = "" }) {
     replace(`/verse/${verseId}`);
   }
 
-  const labelChapterNumber = `chapternumber${idSuffix}`;
-  const labelVerseNumber = `versenumber${idSuffix}`;
+  function getMaxVersesInChapter(chapterNumber) {
+    const valChapterNumber = getValNumericChapterNumber(chapterNumber);
+    if (!valChapterNumber.valid) {
+      // Rather than return an error, return a safe value
+      return MAX_VERSE_NUMBER_IN_ALL_CHAPTERS;
+    }
+    return NUMBER_OF_VERSES_IN_CHAPTERS[
+      valChapterNumber.numericChapterNumber - 1
+    ];
+  }
+  const idChapterNumber = `chapternumber${idSuffix}`;
+  const idVerseNumber = `versenumber${idSuffix}`;
+
   return (
-    <>
-      <label htmlFor={labelChapterNumber}>Ch.</label>
+    <div className="SelectChapterVerse">
+      <label htmlFor={idChapterNumber}>Ch.</label>
       <input
         type="number"
-        id={labelChapterNumber}
+        id={idChapterNumber}
         size="2"
         min={FIRST_CHAPTERNUMBER}
         max={LAST_CHAPTERNUMBER}
@@ -116,20 +144,20 @@ function SelectChapterVerse({ idSuffix = "" }) {
           setChapterNumber(e.target.value);
         }}
       />
-      <label htmlFor={labelVerseNumber}>Ve.</label>
+      <label htmlFor={idVerseNumber}>Ve.</label>
       <input
         type="number"
-        id={labelVerseNumber}
+        id={idVerseNumber}
         size="2"
-        min={MIN_VERSE_NUMBER_IN_CHAPTER}
-        max={MAX_VERSE_NUMBER_IN_CHAPTER}
+        min={MIN_VERSE_NUMBER_IN_ALL_CHAPTERS}
+        max={getMaxVersesInChapter(chapterNumber)}
         value={verseNumber}
         onChange={(e) => {
           setVerseNumber(e.target.value);
         }}
       />
       <button onClick={goToChapterVerse}>Go</button>
-    </>
+    </div>
   );
 }
 export default SelectChapterVerse;

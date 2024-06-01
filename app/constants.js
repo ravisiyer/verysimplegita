@@ -5,8 +5,8 @@ export const FIRST_CHAPTERNUMBER = 1;
 export const LAST_CHAPTERNUMBER = 18;
 export const FIRST_VERSEID = 1;
 export const LAST_VERSEID = 701;
-export const MIN_VERSE_NUMBER_IN_CHAPTER = 1;
-export const MAX_VERSE_NUMBER_IN_CHAPTER = 78;
+export const MIN_VERSE_NUMBER_IN_ALL_CHAPTERS = 1;
+export const MAX_VERSE_NUMBER_IN_ALL_CHAPTERS = 78;
 export const NUMBER_OF_VERSES_IN_CHAPTERS = [
   47, //Chapter 1, index 0
   72, //Chapter 2

@@ -11,3 +11,23 @@ body {
   pointer-events: none;
   color: rgb(161, 158, 158);
 }
+
+.SelectChapterVerse {
+  display: inline;
+}
+
+.SelectChapterVerse label,
+.SelectChapterVerse input {
+  margin-right: 0.25rem;
+}
+
+.SelectChapterVerse input {
+  width: 40px;
+}
+
+.SelectChapterVerse button {
+  color: whitesmoke;
+  background-color: black;
+  border-radius: 5px;
+  cursor: pointer;
+}

@@ -70,6 +70,7 @@ async function Page({ params }) {
         <Navbar
           numericVerseId={numericVerseId}
           numericChapterNumber={numericChapterNumber}
+          idSuffix="2"
         />
       </Suspense>
     </div>
