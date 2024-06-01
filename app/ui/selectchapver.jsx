@@ -1,7 +1,6 @@
 "use client";
 import { usePathname, useRouter } from "next/navigation";
-// import { useDebouncedCallback } from "use-debounce";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   FIRST_CHAPTERNUMBER,
   LAST_CHAPTERNUMBER,
@@ -23,10 +22,9 @@ function calcVerseId(numericChapterNumber, numericVerseNumber) {
   }
   verseId += numericVerseNumber;
   return verseId;
-  // return 701;
 }
 
-function SelectChapterVerse() {
+function SelectChapterVerse({ idSuffix = "" }) {
   const [chapterNumber, setChapterNumber] = useState("1");
   const [verseNumber, setVerseNumber] = useState("");
 
@@ -35,13 +33,28 @@ function SelectChapterVerse() {
 
   const pathChapterNumber = 1;
 
+  useEffect(() => {
+    //Runs only on the first render
+    if (pathname === "/") {
+      return;
+    }
+    const pathSegments = pathname.split("/");
+    // console.log(pathname);
+    // console.log(pathSegments);
+    if (pathSegments.length === 3) {
+      const pathVerseId = pathSegments[2];
+      console.log("In useEffect(), pathVerseId:", pathVerseId);
+    } else if (pathSegments.length === 2) {
+      const pathChapterNumber = pathSegments[1];
+      console.log("In useEffect(), pathChapterNumber:", pathChapterNumber);
+      setChapterNumber(pathChapterNumber);
+    }
+  }, []);
+
   function goToChapterVerse() {
     const chapterErrorMessage =
       `For chapter (Ch.), please specify a number between ` +
       `${FIRST_CHAPTERNUMBER} and ${LAST_CHAPTERNUMBER}`;
-    // const verseErrorMessagePartial =
-    //   `For verse (Ve.), please specify a number between ` +
-    //   `${MIN_VERSE_NUMBER_IN_CHAPTER} and `;
 
     if (isNaN(chapterNumber)) {
       alert(chapterErrorMessage);
@@ -87,50 +100,36 @@ function SelectChapterVerse() {
     replace(`/verse/${verseId}`);
   }
 
-  //   function handleChapter(inputChapterNumber) {
-  //     setChapterNumber(inputChapterNumber);
-  //     //   replace(`/${chapterNumber}`);
-  //   }
-
-  //   const handleChapter = useDebouncedCallback((inputChapterNumber) => {
-  //     setChapterNumber(inputChapterNumber);
-  //     // replace(`/${chapterNumber}`);
-  //   }, 300);
+  const labelChapterNumber = `chapternumber${idSuffix}`;
+  const labelVerseNumber = `versenumber${idSuffix}`;
   return (
-    // <div>
     <>
-      <label htmlFor="chapternumber">Ch.</label>
+      <label htmlFor={labelChapterNumber}>Ch.</label>
       <input
         type="number"
-        name="chapternumber"
+        id={labelChapterNumber}
         size="2"
         min={FIRST_CHAPTERNUMBER}
         max={LAST_CHAPTERNUMBER}
         value={chapterNumber}
         onChange={(e) => {
           setChapterNumber(e.target.value);
-          //   handleChapter(e.target.value);
         }}
-        // defaultValue={pathChapterNumber}
       />
-      <label htmlFor="versenumber">Ve.</label>
+      <label htmlFor={labelVerseNumber}>Ve.</label>
       <input
         type="number"
-        name="versenumber"
+        id={labelVerseNumber}
         size="2"
         min={MIN_VERSE_NUMBER_IN_CHAPTER}
         max={MAX_VERSE_NUMBER_IN_CHAPTER}
         value={verseNumber}
         onChange={(e) => {
           setVerseNumber(e.target.value);
-          //   handleChapter(e.target.value);
         }}
-        // defaultValue={pathverseNumber}
       />
       <button onClick={goToChapterVerse}>Go</button>
-      {/* <button>Go</button> */}
     </>
-    // {/* </div> */}
   );
 }
 export default SelectChapterVerse;

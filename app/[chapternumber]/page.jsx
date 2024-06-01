@@ -55,7 +55,7 @@ async function Page({ params }) {
           </div>
         ))}
         <p>{`Chapter ${chapterNumber}: ${gitaChapter.nameTranslated} ${gitaChapter.name}`}</p>
-        <Navbar numericChapterNumber={numericChapterNumber} />
+        <Navbar numericChapterNumber={numericChapterNumber} idSuffix="2" />
       </Suspense>
     </div>
   );

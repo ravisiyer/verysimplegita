@@ -8,7 +8,11 @@ import {
 } from "@/app/constants";
 import SelectChapterVerse from "../ui/selectchapver";
 
-function Navbar({ numericChapterNumber = 0, numericVerseId = 0 }) {
+function Navbar({
+  numericChapterNumber = 0,
+  numericVerseId = 0,
+  idSuffix = "",
+}) {
   let nextHref = "";
   let prevHref = "";
   let upHref = "";
@@ -44,7 +48,7 @@ function Navbar({ numericChapterNumber = 0, numericVerseId = 0 }) {
         Next
       </Link>
       <Link href={upHref}>Up</Link>
-      <SelectChapterVerse />
+      <SelectChapterVerse idSuffix={idSuffix} />
     </div>
   );
 }
