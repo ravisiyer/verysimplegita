@@ -23,6 +23,14 @@ function SelectChapterVerse({ idSuffix = "" }) {
   const pathname = usePathname();
   const { replace } = useRouter();
 
+  // I am not clear on whether the code in below useEffect should be coded in this useEffect or in the main
+  // component itself. The Next.js official tutorial code has a simpler equivalent, coded in the (client) component
+  // itself (nav-links.tsx).
+  // Another question is whether the dependency array for the useEffect below should be an empty array or
+  // have pathname as a dependency.
+  // I am getting the impression that in Next.js when the route changes, the component is kind-of recreated (though some
+  // caching may be coming into play) and so the empty dependency array useEffect() gets invoked (initialization time).
+  // This code works. I think I should postpone deeper analysis of this matter.
   useEffect(() => {
     if (pathname === "/") {
       return;

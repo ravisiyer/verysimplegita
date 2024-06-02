@@ -2,24 +2,17 @@ import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { getChapter } from "../lib/data";
 import Link from "next/link";
-import { FIRST_CHAPTERNUMBER, LAST_CHAPTERNUMBER } from "../constants";
+import { getValNumericChapterNumber } from "../lib/util";
 import Navbar from "@/app/ui/navbar";
 
 async function Page({ params }) {
   const chapterNumber = params.chapternumber;
 
-  if (isNaN(chapterNumber)) {
+  const valChapterNumber = getValNumericChapterNumber(chapterNumber);
+  if (!valChapterNumber.valid) {
     notFound();
   }
-
-  const numericChapterNumber = Number(chapterNumber);
-  if (
-    !Number.isInteger(numericChapterNumber) ||
-    numericChapterNumber < FIRST_CHAPTERNUMBER ||
-    numericChapterNumber > LAST_CHAPTERNUMBER
-  ) {
-    notFound();
-  }
+  const numericChapterNumber = valChapterNumber.numericChapterNumber;
 
   let data = await getChapter(chapterNumber);
   let gitaChapter = data.gitaChapter;

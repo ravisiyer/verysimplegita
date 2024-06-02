@@ -2,24 +2,17 @@ import { getVerse } from "@/app/lib/data";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { capitalizeFirstLetter } from "@/app/lib/util";
-import { FIRST_VERSEID, LAST_VERSEID } from "@/app/constants";
+import { getValNumericVerseId } from "@/app/lib/util";
 import Navbar from "@/app/ui/navbar";
 
 async function Page({ params }) {
   const verseId = params.id;
 
-  if (isNaN(verseId)) {
+  const valVerseId = getValNumericVerseId(verseId);
+  if (!valVerseId.valid) {
     notFound();
   }
-
-  const numericVerseId = Number(verseId);
-  if (
-    !Number.isInteger(numericVerseId) ||
-    numericVerseId < FIRST_VERSEID ||
-    numericVerseId > LAST_VERSEID
-  ) {
-    notFound();
-  }
+  const numericVerseId = valVerseId.numericVerseId;
 
   let data = await getVerse(verseId);
   let gitaVerse = data.gitaVerse;

@@ -38,6 +38,21 @@ export function getValNumericVerseNumber(verseNumber, numericChapterNumber) {
   return { valid: true, numericVerseNumber };
 }
 
+export function getValNumericVerseId(verseId) {
+  if (isNaN(verseId)) {
+    return { valid: false, numericVerseId: 0 };
+  }
+  const numericVerseId = Number(verseId);
+  if (
+    !Number.isInteger(numericVerseId) ||
+    numericVerseId < FIRST_VERSEID ||
+    numericVerseId > LAST_VERSEID
+  ) {
+    return { valid: false, numericVerseId };
+  }
+  return { valid: true, numericVerseId };
+}
+
 export function calcNumericVerseId(numericChapterNumber, numericVerseNumber) {
   let numericVerseId = 0;
   if (numericChapterNumber > 1) {
