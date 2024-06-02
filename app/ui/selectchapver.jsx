@@ -7,6 +7,8 @@ import {
   MIN_VERSE_NUMBER_IN_ALL_CHAPTERS,
   MAX_VERSE_NUMBER_IN_ALL_CHAPTERS,
   NUMBER_OF_VERSES_IN_CHAPTERS,
+  FIRST_VERSEID,
+  LAST_VERSEID,
 } from "../constants";
 
 function calcVerseId(numericChapterNumber, numericVerseNumber) {
@@ -22,6 +24,43 @@ function calcVerseId(numericChapterNumber, numericVerseNumber) {
   }
   verseId += numericVerseNumber;
   return verseId;
+}
+
+function getCVNumbersFromVerseId(verseId) {
+  if (isNaN(verseId)) {
+    return { chapterNumber: "", verseNumber: "" };
+  }
+  const numericVerseId = Number(verseId);
+  if (
+    !Number.isInteger(numericVerseId) ||
+    numericVerseId < FIRST_VERSEID ||
+    numericVerseId > LAST_VERSEID
+  ) {
+    return { chapterNumber: "", verseNumber: "" };
+  }
+  let tempNumericVerseId = numericVerseId;
+  for (
+    let numericChapterNumber = FIRST_CHAPTERNUMBER;
+    numericChapterNumber <= LAST_CHAPTERNUMBER;
+    numericChapterNumber++
+  ) {
+    if (
+      tempNumericVerseId <=
+      NUMBER_OF_VERSES_IN_CHAPTERS[numericChapterNumber - 1]
+    ) {
+      return {
+        chapterNumber: `${numericChapterNumber}`,
+        verseNumber: `${tempNumericVerseId}`,
+      };
+    } else {
+      tempNumericVerseId -=
+        NUMBER_OF_VERSES_IN_CHAPTERS[numericChapterNumber - 1];
+    }
+  }
+  console.log(
+    "function getCVNumbersFromVerseId() error as code should not come to this point."
+  );
+  return { chapterNumber: "", verseNumber: "" };
 }
 
 function SelectChapterVerse({ idSuffix = "" }) {
@@ -44,6 +83,10 @@ function SelectChapterVerse({ idSuffix = "" }) {
     if (pathSegments.length === 3) {
       const pathVerseId = pathSegments[2];
       console.log("In useEffect(), pathVerseId:", pathVerseId);
+      const chapterVerseNumbers = getCVNumbersFromVerseId(pathVerseId);
+      setChapterNumber(chapterVerseNumbers.chapterNumber);
+      setVerseNumber(chapterVerseNumbers.verseNumber);
+      // return { chapterNumber: "", verseNumber: "" };
     } else if (pathSegments.length === 2) {
       const pathChapterNumber = pathSegments[1];
       console.log("In useEffect(), pathChapterNumber:", pathChapterNumber);
@@ -52,6 +95,9 @@ function SelectChapterVerse({ idSuffix = "" }) {
   }, []);
 
   function getValNumericChapterNumber(chapterNumber) {
+    if (isNaN(chapterNumber)) {
+      return { valid: false, numericChapterNumber: 0 };
+    }
     const numericChapterNumber = Number(chapterNumber);
     if (
       !Number.isInteger(numericChapterNumber) ||
@@ -68,10 +114,10 @@ function SelectChapterVerse({ idSuffix = "" }) {
       `For chapter (Ch.), please specify a number between ` +
       `${FIRST_CHAPTERNUMBER} and ${LAST_CHAPTERNUMBER}`;
 
-    if (isNaN(chapterNumber)) {
-      alert(chapterErrorMessage);
-      return;
-    }
+    // if (isNaN(chapterNumber)) {
+    //   alert(chapterErrorMessage);
+    //   return;
+    // }
     const valChapterNumber = getValNumericChapterNumber(chapterNumber);
     if (!valChapterNumber.valid) {
       alert(chapterErrorMessage);
@@ -98,7 +144,7 @@ function SelectChapterVerse({ idSuffix = "" }) {
         NUMBER_OF_VERSES_IN_CHAPTERS[numericChapterNumber - 1]
       }`;
 
-    if (isNaN(chapterNumber)) {
+    if (isNaN(verseNumber)) {
       alert(verseErrorMessage);
       return;
     }

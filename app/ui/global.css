@@ -14,6 +14,11 @@ body {
 
 .SelectChapterVerse {
   display: inline;
+  /* padding-top: 0.25rem;
+  padding-bottom: 0.5rem;
+  padding-left: 0.1rem;
+  padding-right: 0.1rem;
+  border: 2px solid black; */
 }
 
 .SelectChapterVerse label,
@@ -30,4 +35,13 @@ body {
   background-color: black;
   border-radius: 5px;
   cursor: pointer;
+}
+
+.SelectChapterVerse button:hover {
+  color: black;
+  background-color: whitesmoke;
+}
+
+.SelectChapterVerse button:active {
+  transform: scale(0.9);
 }
