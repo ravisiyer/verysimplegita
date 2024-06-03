@@ -33,18 +33,27 @@ body {
   width: 40px;
 }
 
-.SelectChapterVerse button {
+.SelectChapterVerse input[type="submit"] {
+  width: 25px;
+  margin: 0;
+  padding: 0;
   color: whitesmoke;
   background-color: black;
   border-radius: 5px;
   cursor: pointer;
 }
 
-.SelectChapterVerse button:hover {
+.SelectChapterVerse input[type="submit"]:hover {
   color: black;
   background-color: whitesmoke;
 }
 
-.SelectChapterVerse button:active {
+.SelectChapterVerse input[type="submit"]:active {
   transform: scale(0.9);
+}
+
+.about {
+  margin-top: 0.5rem;
+  margin-bottom: 0;
+  text-align: right;
 }

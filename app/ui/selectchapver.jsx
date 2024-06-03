@@ -15,6 +15,9 @@ import {
   NUMBER_OF_VERSES_IN_CHAPTERS,
 } from "../constants";
 
+// idSuffix is used to differentiate between SelectChapterVerse's input element ids if two parent
+// Navbar components are used on same page - e.g. at top of page and bottom of page.
+// Note that HTML spec. states that each element id must be unique
 function SelectChapterVerse({
   initialChapterNumber = "",
   initialVerseNumber = "",
@@ -23,22 +26,24 @@ function SelectChapterVerse({
   const [chapterNumber, setChapterNumber] = useState("");
   const [verseNumber, setVerseNumber] = useState("");
 
-  console.log("SCV: initialChapterNumber: ", initialChapterNumber);
-  console.log("SCV: initialVerseNumber: ", initialVerseNumber);
-  console.log("SCV: chapterNumber: ", chapterNumber);
-  console.log("SCV: verseNumber: ", verseNumber);
+  // console.log("SCV: initialChapterNumber: ", initialChapterNumber);
+  // console.log("SCV: initialVerseNumber: ", initialVerseNumber);
+  // console.log("SCV: chapterNumber: ", chapterNumber);
+  // console.log("SCV: verseNumber: ", verseNumber);
 
   useEffect(() => {
     setChapterNumber(initialChapterNumber);
     setVerseNumber(initialVerseNumber);
-    console.log(
-      "SCV UseEffect: Set chapter and verse number state variables to passed & changed props"
-    );
+    // console.log(
+    //   "SCV UseEffect: Set chapter and verse number state variables to passed & changed props"
+    // );
   }, [initialChapterNumber, initialVerseNumber]);
 
   const { replace } = useRouter();
 
-  function handleGoClick() {
+  function handleSubmit(e) {
+    // console.log("SCV handleSubmit handler invoked.");
+    e.preventDefault();
     const chapterErrorMessage =
       `For chapter (Ch.), please specify a number between ` +
       `${FIRST_CHAPTERNUMBER} and ${LAST_CHAPTERNUMBER}`;
@@ -79,14 +84,7 @@ function SelectChapterVerse({
   const idVerseNumber = `versenumber${idSuffix}`;
 
   return (
-    <form
-      className="SelectChapterVerse"
-      onSubmit={(e) => {
-        console.log("SCV onSubmit handler invoked.");
-        e.preventDefault();
-        handleGoClick(e);
-      }}
-    >
+    <form className="SelectChapterVerse" onSubmit={handleSubmit}>
       <label htmlFor={idChapterNumber}>Ch.</label>
       <input
         type="number"

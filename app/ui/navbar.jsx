@@ -16,6 +16,9 @@ import {
 } from "../lib/util";
 import { useEffect, useState } from "react";
 
+// idSuffix is used to differentiate between Navbar child component SelectChapterVerse's input element ids
+// if two Navbar components are used on same page - e.g. at top of page and bottom of page.
+// Note that HTML spec. states that each element id must be unique
 function Navbar({ idSuffix = "" }) {
   const [nextHref, setNextHref] = useState("");
   const [prevHref, setPrevHref] = useState("");
@@ -38,7 +41,7 @@ function Navbar({ idSuffix = "" }) {
       const pathSegments = pathname.split("/");
       if (pathSegments.length === 2) {
         const pathChapterNumber = pathSegments[1];
-        console.log("In Navbar, pathChapterNumber:", pathChapterNumber);
+        // console.log("In Navbar, pathChapterNumber:", pathChapterNumber);
         const valChapterNumber = getValNumericChapterNumber(pathChapterNumber);
         if (valChapterNumber.valid) {
           const numericChapterNumber = valChapterNumber.numericChapterNumber;
@@ -60,7 +63,7 @@ function Navbar({ idSuffix = "" }) {
         }
       } else if (pathSegments.length === 3) {
         const pathVerseId = pathSegments[2];
-        console.log("In Navbar, pathVerseId:", pathVerseId);
+        // console.log("In Navbar, pathVerseId:", pathVerseId);
         const valVerseId = getValNumericVerseId(pathVerseId);
         if (valVerseId.valid) {
           const numericVerseId = valVerseId.numericVerseId;
@@ -83,11 +86,11 @@ function Navbar({ idSuffix = "" }) {
         }
       }
     }
-    console.log("In Navbar useEffect(): Just before exiting");
+    // console.log("In Navbar useEffect(): Just before exiting");
   }, [pathname]);
 
-  console.log("Just before rendering Navbar div");
-  console.log("href values:", prevHref, nextHref, upHref);
+  // console.log("Just before rendering Navbar div");
+  // console.log("href values:", prevHref, nextHref, upHref);
   return (
     <div className="Navbar">
       <Link href="/">Home</Link>
