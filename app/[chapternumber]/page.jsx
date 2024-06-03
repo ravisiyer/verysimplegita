@@ -1,9 +1,9 @@
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { getChapter } from "../lib/data";
+// import { getChapter } from "../lib/dummydata";
 import Link from "next/link";
 import { getValNumericChapterNumber } from "../lib/util";
-import Navbar from "@/app/ui/navbar";
 
 async function Page({ params }) {
   const chapterNumber = params.chapternumber;
@@ -20,7 +20,6 @@ async function Page({ params }) {
   return (
     <div>
       <Suspense fallback={`Loading ...`}>
-        <Navbar numericChapterNumber={numericChapterNumber} />
         <h3>{`Chapter ${chapterNumber}: ${gitaChapter.nameTranslated} ${gitaChapter.name}`}</h3>
         <h4>English Summary</h4>
         <p>{gitaChapter.chapterSummary}</p>
@@ -48,7 +47,6 @@ async function Page({ params }) {
           </div>
         ))}
         <p>{`Chapter ${chapterNumber}: ${gitaChapter.nameTranslated} ${gitaChapter.name}`}</p>
-        <Navbar numericChapterNumber={numericChapterNumber} idSuffix="2" />
       </Suspense>
     </div>
   );

@@ -1,12 +1,11 @@
 "use client";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import {
   getValNumericChapterNumber,
   getValNumericVerseNumber,
   calcNumericVerseId,
   getMaxVersesInChapter,
-  getCVNumbersFromVerseId,
 } from "../lib/util";
 import {
   FIRST_CHAPTERNUMBER,
@@ -16,38 +15,28 @@ import {
   NUMBER_OF_VERSES_IN_CHAPTERS,
 } from "../constants";
 
-function SelectChapterVerse({ idSuffix = "" }) {
+function SelectChapterVerse({
+  initialChapterNumber = "",
+  initialVerseNumber = "",
+  idSuffix = "",
+}) {
   const [chapterNumber, setChapterNumber] = useState("");
   const [verseNumber, setVerseNumber] = useState("");
 
-  const pathname = usePathname();
-  const { replace } = useRouter();
+  console.log("SCV: initialChapterNumber: ", initialChapterNumber);
+  console.log("SCV: initialVerseNumber: ", initialVerseNumber);
+  console.log("SCV: chapterNumber: ", chapterNumber);
+  console.log("SCV: verseNumber: ", verseNumber);
 
-  // I am not clear on whether the code in below useEffect should be coded in this useEffect or in the main
-  // component itself. The Next.js official tutorial code has a simpler equivalent, coded in the (client) component
-  // itself (nav-links.tsx).
-  // Another question is whether the dependency array for the useEffect below should be an empty array or
-  // have pathname as a dependency.
-  // I am getting the impression that in Next.js when the route changes, the component is kind-of recreated (though some
-  // caching may be coming into play) and so the empty dependency array useEffect() gets invoked (initialization time).
-  // This code works. I think I should postpone deeper analysis of this matter.
   useEffect(() => {
-    if (pathname === "/") {
-      return;
-    }
-    const pathSegments = pathname.split("/");
-    if (pathSegments.length === 3) {
-      const pathVerseId = pathSegments[2];
-      console.log("In useEffect(), pathVerseId:", pathVerseId);
-      const chapterVerseNumbers = getCVNumbersFromVerseId(pathVerseId);
-      setChapterNumber(chapterVerseNumbers.chapterNumber);
-      setVerseNumber(chapterVerseNumbers.verseNumber);
-    } else if (pathSegments.length === 2) {
-      const pathChapterNumber = pathSegments[1];
-      console.log("In useEffect(), pathChapterNumber:", pathChapterNumber);
-      setChapterNumber(pathChapterNumber);
-    }
-  }, []);
+    setChapterNumber(initialChapterNumber);
+    setVerseNumber(initialVerseNumber);
+    console.log(
+      "SCV UseEffect: Set chapter and verse number state variables to passed & changed props"
+    );
+  }, [initialChapterNumber, initialVerseNumber]);
+
+  const { replace } = useRouter();
 
   function handleGoClick() {
     const chapterErrorMessage =
@@ -90,7 +79,14 @@ function SelectChapterVerse({ idSuffix = "" }) {
   const idVerseNumber = `versenumber${idSuffix}`;
 
   return (
-    <div className="SelectChapterVerse">
+    <form
+      className="SelectChapterVerse"
+      onSubmit={(e) => {
+        console.log("SCV onSubmit handler invoked.");
+        e.preventDefault();
+        handleGoClick(e);
+      }}
+    >
       <label htmlFor={idChapterNumber}>Ch.</label>
       <input
         type="number"
@@ -98,6 +94,7 @@ function SelectChapterVerse({ idSuffix = "" }) {
         size="2"
         min={FIRST_CHAPTERNUMBER}
         max={LAST_CHAPTERNUMBER}
+        required
         value={chapterNumber}
         onChange={(e) => {
           setChapterNumber(e.target.value);
@@ -119,8 +116,8 @@ function SelectChapterVerse({ idSuffix = "" }) {
           setVerseNumber(e.target.value);
         }}
       />
-      <button onClick={handleGoClick}>Go</button>
-    </div>
+      <input type="submit" value="Go" />
+    </form>
   );
 }
 export default SelectChapterVerse;

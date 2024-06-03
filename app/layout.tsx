@@ -1,5 +1,6 @@
 import "@/app/ui/global.css";
 import type { Metadata } from "next";
+import Navbar from "./ui/navbar";
 
 export const metadata: Metadata = {
   title: "Bhagavad Gita (Very Simple App)",
@@ -13,7 +14,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <Navbar />
+        {children}
+      </body>
     </html>
   );
 }

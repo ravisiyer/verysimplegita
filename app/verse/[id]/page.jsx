@@ -1,9 +1,9 @@
 import { getVerse } from "@/app/lib/data";
+// import { getVerse } from "@/app/lib/dummydata";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { capitalizeFirstLetter } from "@/app/lib/util";
 import { getValNumericVerseId } from "@/app/lib/util";
-import Navbar from "@/app/ui/navbar";
 
 async function Page({ params }) {
   const verseId = params.id;
@@ -21,10 +21,6 @@ async function Page({ params }) {
   return (
     <div>
       <Suspense fallback={`Loading ...`}>
-        <Navbar
-          numericVerseId={numericVerseId}
-          numericChapterNumber={numericChapterNumber}
-        />
         <h3>{`Chapter ${gitaVerse.chapterNumber}, Verse ${gitaVerse.verseNumber}`}</h3>
         <h4>Text</h4>
         <p>{gitaVerse.text}</p>
@@ -60,11 +56,6 @@ async function Page({ params }) {
         ))}
         <hr />
         <p>{`Chapter ${gitaVerse.chapterNumber}, Verse ${gitaVerse.verseNumber}`}</p>
-        <Navbar
-          numericVerseId={numericVerseId}
-          numericChapterNumber={numericChapterNumber}
-          idSuffix="2"
-        />
       </Suspense>
     </div>
   );
