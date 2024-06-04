@@ -31,7 +31,7 @@ function Page() {
         .
       </p>
       <p>
-        App's GitHub{" "}
+        App GitHub{" "}
         <a href="https://github.com/ravisiyer/verysimplegita">repository</a> and
         associated{" "}
         <a href="https://github.com/ravisiyer/verysimplegita/blob/main/README.md">
