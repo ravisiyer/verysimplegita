@@ -8,9 +8,6 @@ async function ChapterSummaries() {
 
   return (
     <div>
-      <p className="about">
-        <Link href="/about">About App & Data</Link>
-      </p>
       <h2>Bhagavad Gita Chapter Summaries भगवत गीता अध्यायों का सारांश</h2>
       {allGitaChapters.map((chapter) => (
         <div key={chapter.id}>

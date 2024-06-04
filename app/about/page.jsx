@@ -3,6 +3,7 @@ import { GRAPHQL_URI, GRAPHQL_EXPLORER_URI } from "@/app/constants";
 function Page() {
   return (
     <div>
+      <h1>About App & Data</h1>
       <p>
         This is a very simple but functional, open-source freeware, Bhagavad
         Gita web app I wrote recently. It uses Next.js and Apollo Client to
