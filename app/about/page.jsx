@@ -1,4 +1,4 @@
-import { GRAPHQL_URI } from "@/app/constants";
+import { GRAPHQL_URI, GRAPHQL_EXPLORER_URI } from "@/app/constants";
 
 function Page() {
   return (
@@ -10,7 +10,10 @@ function Page() {
         and displays it on browser. It is shared under free-software MIT
         license.
       </p>
-      <p>{`Data source (GraphQL endpoint): ${GRAPHQL_URI}`}</p>
+      <p>
+        Data source (GraphQL endpoint): {GRAPHQL_URI} (GraphQL Explorer:{" "}
+        <a href={GRAPHQL_EXPLORER_URI}>{GRAPHQL_EXPLORER_URI}</a>)
+      </p>
       <p>
         I have deliberately kept this version very simple. I saw some
         open-source Gita apps using Next.js but their code was quite involved. I
@@ -20,10 +23,27 @@ function Page() {
         API. Note that using current Next.js framework may provide performance
         benefits for the web app.
       </p>
-      <a href="https://raviswdev.blogspot.com/2024/05/notes-on-my-very-simple-bhagavad-gita.html">
-        More about this app can be read in this associated blog post.
-      </a>
-      <p>Ravi S. Iyer</p>
+      <p>
+        More about this app can be read in{" "}
+        <a href="https://raviswdev.blogspot.com/2024/05/notes-on-my-very-simple-bhagavad-gita.html">
+          this associated blog post
+        </a>
+        .
+      </p>
+      <p>
+        App's GitHub{" "}
+        <a href="https://github.com/ravisiyer/verysimplegita">repository</a> and
+        associated{" "}
+        <a href="https://github.com/ravisiyer/verysimplegita/blob/main/README.md">
+          README
+        </a>
+        .
+      </p>
+      <p>
+        App version: 2.0, Date: 4th June 2024
+        <br />
+        App author: Ravi S. Iyer
+      </p>
     </div>
   );
 }

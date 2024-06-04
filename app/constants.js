@@ -1,4 +1,5 @@
 export const GRAPHQL_URI = "https://gql.bhagavadgita.io/graphql";
+export const GRAPHQL_EXPLORER_URI = "https://gql.bhagavadgita.io/graphiql";
 
 // Hard coded now; Consider replacing later from GraphQL data
 export const FIRST_CHAPTERNUMBER = 1;

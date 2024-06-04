@@ -1,3 +1,9 @@
+**README update for Version 2.0**
+
+This version adds to earlier [version 1.0](https://github.com/ravisiyer/verysimplegita/releases/tag/v1.0.0), the feature of going to a user specified chapter and optionally verse. It adds a little complexity to the app but not too much. Further, this little complexity is limited to two components (Navbar and its child SelectChapterVerse) and some utility functions in one file (util.js). Some minor finishing touches were added like moving Navbar to app layout page and thus having common Navbar for all app pages, adding not-found pages and about page.
+
+**README of [Version 1.0](https://github.com/ravisiyer/verysimplegita/releases/tag/v1.0.0)**
+
 This is a very simple but functional, open-source freeware, Bhagavad Gita web app. It uses Next.js and Apollo Client to retrieve Bhagavad Gita chapters and verses data from a GraphQL endpoint: https://gql.bhagavadgita.io/graphql (Explorer: https://gql.bhagavadgita.io/graphiql), and displays it on browser. It is shared under free-software MIT license.
 
 I have deliberately kept this version very simple. I saw some open-source Gita apps using Next.js but their code was quite involved. I wanted to see whether one can write very simple Hindu scripture viewer web apps using current Next.js framework without too much code and coding complexity, provided scripture content was available through an API. Note that using current Next.js framework may provide performance benefits for the web app.
