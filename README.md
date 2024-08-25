@@ -1,3 +1,5 @@
+[25 Aug. 2024 Update Note: Improved version with regular web app UI: https://gita-rsi.vercel.app/ ] 
+
 **README update for Version 2.0**
 
 This version adds to earlier [version 1.0](https://github.com/ravisiyer/verysimplegita/releases/tag/v1.0.0), the feature of going to a user specified chapter and optionally verse. It adds a little complexity to the app but not too much. Further, this little complexity is limited to two components (Navbar and its child SelectChapterVerse) and some utility functions in one file (util.js). Some minor finishing touches were added like moving Navbar to app layout page and thus having common Navbar for all app pages, adding not-found pages and about page.
